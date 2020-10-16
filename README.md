@@ -33,7 +33,7 @@ or raw CCU-JSON where the URLs listed inside "objects" JSONArray
    </li>
    <li>args[1] is type of purge - options are: 'delete' or 'invalidate'</li>
    <li>args[2] is target network - options are: 'staging' or 'production'</li>
-   <li>args[3] is  full path to the directory which has file(s) containing either list of URLs or raw CCU JSON to be executed synchronouslyargs[4] is number of seconds the CLI will pause between each CCU API call execution</li>
+   <li>args[3] is  full path to the directory which has file(s) containing either list of URLs or raw CCU JSON to be executed synchronously</li>
    <li>
    args[4] is number of seconds the CLI will pause between each CCU API call execution
    </li>
