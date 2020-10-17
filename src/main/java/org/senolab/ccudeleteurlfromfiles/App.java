@@ -19,6 +19,7 @@ public class App {
                     case "delete":
                         if (files != null) {
                             for(File urlsFile : files) {
+                                System.out.println("Executing CCU API call for file "+urlsFile.getAbsolutePath());
                                 Delete delete = new Delete(args[0], args[2], urlsFile.getAbsolutePath());
                                 delete.execute();
                                 Thread.sleep(Integer.parseInt(args[4]) * 1000);
@@ -89,9 +90,9 @@ public class App {
                 "\n" +
                 "Example:\n" +
                 "1) Delete all URLs listed inside all files within /home/user/fileToPurge directory in Staging network\n" +
-                "java -jar ccu.jar /home/user/token.txt delete staging /home/user/fileToPurge 5\n" +
+                "java -jar ccudeleteurlfromfiles.jar /home/user/token.txt delete staging /home/user/fileToPurge 5\n" +
                 "2) Invalidate all URLs listed inside all files within /home/user/fileToPurge directory in production network\n" +
-                "java -jar ccu.jar /home/user/token.txt invalidate production /home/user/fileToPurge 10\n" );
+                "java -jar ccudeleteurlfromfiles.jar /home/user/token.txt invalidate production /home/user/fileToPurge 10\n" );
     }
 
 }
