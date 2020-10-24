@@ -1,7 +1,6 @@
 package org.senolab.ccudeleteurlfromfiles;
 
 import com.akamai.edgegrid.signer.exceptions.RequestSigningException;
-import com.google.api.client.http.HttpResponseException;
 import org.senolab.ccudeleteurlfromfiles.model.Delete;
 import org.senolab.ccudeleteurlfromfiles.model.Invalidate;
 
@@ -15,14 +14,15 @@ public class App {
         try {
             if(args.length == 5) {
                 File[] files = new File(args[3]).listFiles();
+                int sleepInterval = Integer.parseInt(args[4]) * 1000;
                 switch(args[1]) {
                     case "delete":
                         if (files != null) {
                             for(File urlsFile : files) {
                                 System.out.println("Executing CCU API call for file "+urlsFile.getAbsolutePath());
                                 Delete delete = new Delete(args[0], args[2], urlsFile.getAbsolutePath());
-                                delete.execute();
-                                Thread.sleep(Integer.parseInt(args[4]) * 1000);
+                                delete.execute(sleepInterval);
+                                Thread.sleep(sleepInterval);
                             }
                         } else {
                             System.out.println("The directory path specified either contain no files or invalid");
@@ -34,8 +34,8 @@ public class App {
                             for(File urlsFile : files) {
                                 System.out.println("Executing CCU API call for file "+urlsFile.getAbsolutePath());
                                 Invalidate invalidate = new Invalidate(args[0], args[2], urlsFile.getAbsolutePath());
-                                invalidate.execute();
-                                Thread.sleep(Integer.parseInt(args[4]) * 1000);
+                                invalidate.execute(sleepInterval);
+                                Thread.sleep(sleepInterval);
                             }
                         } else {
                             System.out.println("The directory path specified either contain no files or invalid");
@@ -51,25 +51,16 @@ public class App {
         } catch (ParseException e) {
             System.out.println("Something wrong when parsing JSON body to the request. Details: \n");
             e.printStackTrace();
-        } catch (org.json.simple.parser.ParseException e) {
-            System.out.println("Something wrong during parsing file containing JSON object. Details: \n");
-            e.printStackTrace();
-        } catch (HttpResponseException e) {
-            System.out.println("Response code: "+e.getStatusCode());
-            System.out.println("Response headers: \n"+e.getHeaders());
-            System.out.println("Response body: \n"+e.getContent());
         } catch (IOException e) {
             System.out.println("Something wrong during I/O process. Details:");
             e.printStackTrace();
         } catch (RequestSigningException e) {
-            System.out.println("Something wrong during authentication process. Details:");
+            System.out.println("Something wrong during Edgegrid authentication process. Details:");
             e.printStackTrace();
         } catch (InterruptedException e) {
             System.out.println("Thread is prematurely interrupted. Details:");
             e.printStackTrace();
         }
-
-
     }
 
     private static void printInstructions() {
@@ -89,10 +80,13 @@ public class App {
                 "args[4] is number of seconds the CLI will pause between each CCU API call execution\n" +
                 "\n" +
                 "Example:\n" +
-                "1) Delete all URLs listed inside all files within /home/user/fileToPurge directory in Staging network\n" +
-                "java -jar ccudeleteurlfromfiles.jar /home/user/token.txt delete staging /home/user/fileToPurge 5\n" +
-                "2) Invalidate all URLs listed inside all files within /home/user/fileToPurge directory in production network\n" +
+                "1) Scenario: \n" +
+                "Delete all URLs listed inside all files within /home/user/fileToPurge directory in Staging network\n" +
+                "Command to execute: \n" +
+                "java -jar ccudeleteurlfromfiles.jar /home/user/token.txt delete staging /home/user/fileToPurge 5\n\n" +
+                "2) Scenario: \n" +
+                "Invalidate all URLs listed inside all files within /home/user/fileToPurge directory in production network\n" +
+                "Command to execute: \n" +
                 "java -jar ccudeleteurlfromfiles.jar /home/user/token.txt invalidate production /home/user/fileToPurge 10\n" );
     }
-
 }
