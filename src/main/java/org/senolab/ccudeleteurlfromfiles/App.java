@@ -64,7 +64,8 @@ public class App {
     }
 
     private static void printInstructions() {
-        System.out.println("This CLI takes 5 arguments separated by single space. These arguments are: \n" +
+        System.out.println("Welcome to CCU automation CLI v1.0.1 \n\n" +
+                "This CLI takes 5 arguments separated by single space. These arguments are: \n" +
                 "args[0] is location of .edgerc file. " +
                 "This file contain Akamai API client credentials (client token, \n" +
                 "access token, secret, host, and max body size) which necessary for EdgeGrid lib \n" +
