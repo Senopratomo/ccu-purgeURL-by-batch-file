@@ -8,15 +8,25 @@ or raw CCU-JSON where the URLs listed inside "objects" JSONArray
 <h5>Prerequisite</h5>
 <ul>
     <li>Java installed in the local (note: I use JAVA 11 in this sample, but if you have different JAVA version locally, change the "properties" tag in pom.xml</li>
-    <li>Maven installed in local</li>
+    <li>Maven installed in local (if build from source)</li>
 </ul>
 <br>
-<h5>Setup</h5>
+<h5>Setup (build from source)</h5>
 <ul>
     <li>Clone this project</li>
     <li>Go to that root dir of the project</li>
     <li>Run: mvn clean install</li>
     <li>It will produce file ccudeleteurlbyfiles.jar inside "target" folder</li>
+</ul>
+<h5>Getting started</h5>
+<ul>
+    <li>Download the latest .jar from the release section of this repo 
+    https://github.com/Senopratomo/ccu-purgeURL-by-batch-file/releases</li>
+    <li>Run: <br>
+    <code>
+    java -jar ccudeleteurlbyfiles.jar
+    </code>
+    </li>
 </ul>
 <br>
 <h5>How to use the CLI</h5>
