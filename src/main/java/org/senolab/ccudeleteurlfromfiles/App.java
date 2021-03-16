@@ -7,6 +7,7 @@ import org.senolab.ccudeleteurlfromfiles.model.Invalidate;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Arrays;
 
 public class App {
 
@@ -14,12 +15,16 @@ public class App {
         try {
             if(args.length == 5) {
                 File[] files = new File(args[3]).listFiles();
+                Arrays.sort(files);
                 int sleepInterval = Integer.parseInt(args[4]) * 1000;
+                int i = 1;
+                int numOfFiles = files.length;
                 switch(args[1]) {
                     case "delete":
                         if (files != null) {
                             for(File urlsFile : files) {
                                 System.out.println("Executing CCU API call for file "+urlsFile.getAbsolutePath());
+                                System.out.println("Progress: "+(i++)+" out of "+numOfFiles+" files");
                                 Delete delete = new Delete(args[0], args[2], urlsFile.getAbsolutePath());
                                 delete.execute(sleepInterval);
                                 Thread.sleep(sleepInterval);
@@ -33,6 +38,7 @@ public class App {
                         if (files != null) {
                             for(File urlsFile : files) {
                                 System.out.println("Executing CCU API call for file "+urlsFile.getAbsolutePath());
+                                System.out.println("Progress: "+(i++)+" out of "+numOfFiles+" files");
                                 Invalidate invalidate = new Invalidate(args[0], args[2], urlsFile.getAbsolutePath());
                                 invalidate.execute(sleepInterval);
                                 Thread.sleep(sleepInterval);
@@ -64,7 +70,7 @@ public class App {
     }
 
     private static void printInstructions() {
-        System.out.println("Welcome to CCU automation CLI v1.0.1 \n\n" +
+        System.out.println("Welcome to CCU automation CLI v1.2.0 \n\n" +
                 "This CLI takes 5 arguments separated by single space. These arguments are: \n" +
                 "args[0] is location of .edgerc file. " +
                 "This file contain Akamai API client credentials (client token, \n" +
